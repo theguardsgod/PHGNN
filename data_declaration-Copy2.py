@@ -78,9 +78,9 @@ def get_mri(path, training):
     # mri = np.load(str(path))
     mri = sio.loadmat(str(path))
     mri = mri['data']
-    #mri = transform.resize(mri,(94, 94, 94))
+    #mri = transform.resize(mri,(148, 148, 148))
     mri = np.expand_dims(mri, axis=0)
-    #if training:
+    # if training:
         # mri = monai.transforms.RandAffine(prob=0.5, rotate_range=(0, 0, np.pi/4), scale_range=(0.9, 1.1), padding_mode='zeros')(mri)
         # mri = monai.transforms.RandFlip(prob=0.5, spatial_axis=0)(mri)
         # mri = monai.transforms.RandFlip(prob=0.5, spatial_axis=1)(mri)
@@ -88,12 +88,6 @@ def get_mri(path, training):
         # mri = monai.transforms.RandRotate90(prob=0.5, spatial_axes=(0, 1))(mri)
         # mri = monai.transforms.RandRotate90(prob=0.5, spatial_axes=(0, 2))(mri)
         # mri = monai.transforms.RandRotate90(prob=0.5, spatial_axes=(1, 2))(mri)
-        #mri = monai.transforms.ScaleIntensity()(mri)
-        # mri = monai.transforms.RandRotate(range_x=0.1, prob=0.5)(mri)
-        # mri = monai.transforms.RandFlip(spatial_axis=0, prob=0.5)(mri)
-        # mri = monai.transforms.RandFlip(spatial_axis=1, prob=0.5)(mri)
-        # mri = monai.transforms.RandZoom(min_zoom=0.9, max_zoom=1.1, prob=0.5)(mri)
-        #mri = monai.transforms.RandRotate90()(mri)
     #print(mri.shape)
     # mri = np.asarray(mri)[1:, 4:133 ,1:]
     mri = np.asarray(mri)
@@ -166,13 +160,11 @@ def get_clinical(sub_id, clin_df):
                 clinical[11] = 0
                 clinical[12] = 0
                 clinical[13] = 1
-        # clinical[14] = row["MMSE"]
-        # clinical[15] = row["MMSE_missing"]
+        
     
     
     else:
-        #print(sub_id)
-        pass
+        print(sub_id)
     return clinical
 
 
@@ -217,8 +209,8 @@ class MRIDataset(Dataset):
                 im_id = get_ptid(path)
 
                 pet = get_mri(path, self.training)
-                new_path = pathlib.Path(str(path).replace('pet_adni_mat_2mm', 'using_adni_mat_2mm'))
-                mri = get_mri(path, self.training)
+                new_path = pathlib.Path(str(path).replace('mat_pet_1.5mm', 'mat_adni_1.5mm'))
+                mri = get_mri(new_path, self.training)
                 clinical = get_clinical(im_id, self.clin_data)
                 # print(mri.shape)
 

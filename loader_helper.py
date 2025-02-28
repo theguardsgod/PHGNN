@@ -33,20 +33,68 @@ class LoaderHelper:
         #         ToTensor()
         #     ]))
 
-        self.train_ds = MRIDataset(root_dir="/home/ubuntu22/dataset/adni/mat_adni_1mm/adni1/",
+        # self.train_ds = MRIDataset(root_dir="/home/cyliu/dataset/mat_adni_1.5mm/adni1/",
+        #         labels=self.labels,
+        #         training=True,
+        #         transform=transforms.Compose([
+        #         ToTensor()
+        #     ]))
+        # self.test_ds = MRIDataset(root_dir="/home/cyliu/dataset/mat_adni_1.5mm/adni2/",
+        #         labels=self.labels,
+        #         training=False,
+        #         transform=transforms.Compose([
+        #         ToTensor()
+        #     ]))
+        # self.train_ds = MRIDataset(root_dir="/home/cyliu/dataset/mat_pet_1.5mm/adni1/",
+        #         labels=self.labels,
+        #         training=True,
+        #         transform=transforms.Compose([
+        #         ToTensor()
+        #     ]))
+        # self.test_ds = MRIDataset(root_dir="/home/cyliu/dataset/mat_pet_1.5mm/adni2/",
+        #         labels=self.labels,
+        #         training=False,
+        #         transform=transforms.Compose([
+        #         ToTensor()
+        #     ]))
+
+        # self.train_ds = MRIDataset(root_dir="/home/cyliu/dataset/mat_adni/adni1/",
+        #         labels=self.labels,
+        #         training=True,
+        #         transform=transforms.Compose([
+        #         ToTensor()
+        #     ]))
+        # self.test_ds = MRIDataset(root_dir="/home/cyliu/dataset/mat_adni/adni2/",
+        #         labels=self.labels,
+        #         training=False,
+        #         transform=transforms.Compose([
+        #         ToTensor()
+        #     ]))
+
+        # self.train_ds = MRIDataset(root_dir="/home/data2/cyliu/dataset/new_adni/using_adni_mat_2mm/adni1/",
+        #         labels=self.labels,
+        #         training=True,
+        #         transform=transforms.Compose([
+        #         ToTensor()
+        #     ]))
+        # self.test_ds = MRIDataset(root_dir="/home/data2/cyliu/dataset/new_adni/using_adni_mat_2mm/adni2/",
+        #         labels=self.labels,
+        #         training=False,
+        #         transform=transforms.Compose([
+        #         ToTensor()
+        #     ]))
+        self.train_ds = MRIDataset(root_dir="/home/data2/cyliu/dataset/new_adni/pet_adni_mat_2mm/adni1/",
                 labels=self.labels,
                 training=True,
                 transform=transforms.Compose([
                 ToTensor()
             ]))
-        self.test_ds = MRIDataset(root_dir="/home/ubuntu22/dataset/adni/mat_adni_1mm/adni2/",
+        self.test_ds = MRIDataset(root_dir="/home/data2/cyliu/dataset/new_adni/pet_adni_mat_2mm/adni2/",
                 labels=self.labels,
                 training=False,
                 transform=transforms.Compose([
                 ToTensor()
             ]))
-
-
         #print(self.train_ds.len)
         self.indices = []
         self.set_indices()
@@ -153,7 +201,7 @@ class LoaderHelper:
         return train_dl
 
 
-    def get_test_dl(self, fold_ind, shuffle=True, batch_size = 16):
+    def get_test_dl(self, fold_ind, shuffle=False, batch_size = 16):
 
         test_ds = Subset(self.test_ds, self.indices[1])
         test_dl = DataLoader(test_ds, batch_size=batch_size, shuffle=shuffle, num_workers=4, drop_last=True)
